@@ -2,6 +2,7 @@ export interface Book {
   id: number;
   title: string;
   author: string;
+  realYears: string;
   year: string;
   country: string;
   language: string;

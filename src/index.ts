@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import compression from "compression";
 import bookRoute from "./route/route";
-import { parse } from "node:path";
 
 const app = express();
 dotenv.config();
@@ -14,7 +13,7 @@ app.use(
     origin: "*",
     methods: ["GET"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    maxAge: 86400, //24 hours
+    maxAge: 86400, //This allow client to not have the need to ask again and again in every request for 24 hours. Good for slow connection from client side.
   }),
 );
 

@@ -1,6 +1,7 @@
 import { books } from "../mock-data/data";
 import { Book, PaginationResponse } from "../types/type";
 
+//Handle only the logic
 export class BookService {
   static async getBookById(id: number): Promise<Book> {
     const foundBook = books.find((b) => b.id === id);

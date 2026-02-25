@@ -1,6 +1,9 @@
 import { checkSchema } from "express-validator";
 
-// Validates and sanitizes request to ensure type-safety for the Service layer
+/*
+  Validates request to ensure type-safety
+  and sanitize unwanted request
+*/
 
 export const getBookByIdSchema = checkSchema({
   id: {

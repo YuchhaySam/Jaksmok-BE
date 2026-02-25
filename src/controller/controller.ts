@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { BookService } from "../services/service";
 import { matchedData } from "express-validator";
 
+//Handle only request and response
 export class BookController {
   static async getBookById(
     req: Request,
@@ -9,6 +10,7 @@ export class BookController {
     _next: NextFunction,
   ): Promise<void> {
     try {
+      // Filter request to ensure we only work with data that passed validation.
       const { id } = matchedData(req, { locations: ["params"] });
       const book = await BookService.getBookById(id);
       res.status(200).json(book);
@@ -24,7 +26,7 @@ export class BookController {
   static async getAllListedBook(
     req: Request,
     res: Response,
-    next: NextFunction,
+    _next: NextFunction,
   ): Promise<void> {
     try {
       const { size = 20, page = 0 } = matchedData(req, {

@@ -4,7 +4,7 @@ import {
   getAllListedBookSchema,
   getBookByIdSchema,
 } from "../middlewares/schema";
-import { BookController } from "../controller/controller";
+import { BookController } from "../controller/book.controller";
 import { validate } from "../middlewares/validator";
 const route = express.Router();
 
@@ -13,7 +13,7 @@ route.get(
   basicAuth,
   getAllListedBookSchema,
   validate,
-  BookController.getAllListedBook,
+  BookController.listBooks,
 );
 
 route.get(

@@ -1,5 +1,5 @@
 import { books } from "../mock-data/data";
-import { Book, PaginationResponse } from "../types/type";
+import { Book, PaginationResponse } from "../types/book.type";
 
 //Handle only the logic
 export class BookService {
@@ -11,7 +11,7 @@ export class BookService {
     return foundBook;
   }
 
-  static async getAllListedBook(
+  static async listBooks(
     page: number,
     size: number,
   ): Promise<PaginationResponse> {

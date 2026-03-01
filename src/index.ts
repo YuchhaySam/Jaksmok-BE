@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import compression from "compression";
-import bookRoute from "./route/route";
+import bookRouter from "./route/book.route";
 
 const app = express();
 dotenv.config();
@@ -26,7 +26,7 @@ app.use((_req, res, next) => {
   (res.setHeader("Content-Type", "application/json"), next());
 });
 
-app.use("/api/v1", bookRoute);
+app.use("/api/v1", bookRouter);
 
 const port = parseInt(process.env.PORT || "3000");
 app.listen(port, () => {

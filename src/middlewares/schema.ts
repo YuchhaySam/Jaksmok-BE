@@ -11,7 +11,7 @@ export const getBookByIdSchema = checkSchema({
     isInt: {
       options: { min: 0 },
       errorMessage: "id must be a number",
-    }, //Check to if the params is an actual number (if parmas contain a letter, it will be rejected)
+    }, // Check that params are numeric; reject non-numeric input.
     toInt: true, //Convert string to number
   },
 });

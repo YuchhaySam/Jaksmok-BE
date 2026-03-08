@@ -1,5 +1,5 @@
 import express from "express";
-import { validateAuth } from "../middlewares/basic-auth";
+import { validateAuth } from "../middlewares/auth";
 import {
   getAllListedBookSchema,
   getBookByIdSchema,

@@ -37,6 +37,12 @@ export const validateAuth = async (
 
   const [scheme, encodedCredentials] = authHeader.split(" ");
 
+  if ((scheme !== "Bearer" && scheme !== "Basic") || !encodedCredentials) {
+    return res
+      .status(401)
+      .json({ message: "Invalid authorization header format" });
+  }
+
   if (scheme === "Bearer") {
     try {
       const decoded = jwt.verify(encodedCredentials, secret) as {
@@ -77,7 +83,7 @@ export const validateAuth = async (
       const token = jwt.sign(authenticatedUser, secret, { expiresIn: "1h" });
 
       //This is only used for this assisngment, in real world, the header insertion is handle by FE
-      res.setHeader("X-Access-Token", token);
+      res.setHeader("Authorization", `Bearer ${token}`);
       req.user = authenticatedUser;
 
       return next();

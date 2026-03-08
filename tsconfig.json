@@ -4,6 +4,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": ["es2024", "DOM"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,

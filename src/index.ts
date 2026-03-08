@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import compression from "compression";
 import bookRouter from "./route/book.route";
+import { MysqlDataSource } from "./database/data-source";
 
 const app = express();
 dotenv.config();
@@ -29,6 +30,12 @@ app.use((_req, res, next) => {
 app.use("/api/v1", bookRouter);
 
 const port = parseInt(process.env.PORT || "3000");
-app.listen(port, () => {
-  console.log("Server is running");
-});
+MysqlDataSource.initialize()
+  .then(() => {
+    console.log("📡 Database connected!");
+
+    app.listen(port, () => {
+      console.log(`Server running on port: ${port}`);
+    });
+  })
+  .catch((err) => console.error("Database connection error:", err));

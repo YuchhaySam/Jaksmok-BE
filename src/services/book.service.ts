@@ -1,13 +1,14 @@
-import { books } from "../mock-data/data";
-import { Book, PaginationResponse } from "../types/book.type";
+import { MysqlDataSource } from "../database/data-source";
+import { BookEntity } from "../entity/book.entity";
+import { PaginationResponse } from "../types/book.type";
 
 //Handle only the logic
 export class BookService {
-  static async getBookById(id: number): Promise<Book> {
-    const foundBook = books.find((b) => b.id === id);
-    if (!foundBook) {
-      throw new Error("NOT_FOUND");
-    }
+  static async getBookById(id: number): Promise<BookEntity> {
+    const bookRepo = MysqlDataSource.getRepository(BookEntity);
+    const foundBook = await bookRepo.findOneBy({ id });
+    if (!foundBook) throw new Error("NOT_FOUND");
+
     return foundBook;
   }
 
@@ -15,17 +16,25 @@ export class BookService {
     page: number,
     size: number,
   ): Promise<PaginationResponse> {
-    const start = page * size;
-    const end = start + size;
-    const paginatedItems = books.slice(start, end);
+    const bookRepo = MysqlDataSource.getRepository(BookEntity);
+    const [books, totalElements] = await bookRepo.findAndCount({
+      skip: page * size,
+      take: size,
+      order: { id: "ASC" },
+    });
 
-    const response: PaginationResponse = {
+    const totalPages = Math.ceil(totalElements / size);
+    return {
       size,
-      totalElements: books.length,
+      totalElements,
       page,
-      totalPages: Math.ceil(books.length / size),
-      content: paginatedItems,
+      totalPages,
+      content: books,
     };
-    return response;
+  }
+
+  static async createBook(books: BookEntity[]): Promise<void> {
+    if (books.length === 0 || !books) throw new Error("Invalid configuration");
+    await MysqlDataSource.manager.upsert(BookEntity, books, ["id"]);
   }
 }

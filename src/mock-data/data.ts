@@ -1,6 +1,6 @@
-import { Book } from "../types/book.type";
+import { BookEntity } from "../entity/book.entity";
 
-export const books: Book[] = [
+export const books: BookEntity[] = [
   {
     id: 1,
     title: "Things Fall Apart",
